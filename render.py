@@ -78,7 +78,7 @@ class GridGlyphRenderer:
 
 font_path = "fonts/NotoSansMono-VariableFont_wdth,wght.ttf"
 font_path = "fonts/unifont-16.0.04.ttf"
-renderer = GridGlyphRenderer(font_path, cell_size=128, max_cols=16)
+renderer = GridGlyphRenderer(font_path, cell_size=16, max_cols=16)
 
 img = renderer.render_token("▁@#%,;'.-_漢")
 img.show()
