@@ -59,9 +59,7 @@ class GridGlyphRenderer:
 
 if __name__ == "__main__":
 
-    font_path = "fonts/unifont-16.0.04.ttf"
-    renderer = GridGlyphRenderer(font_path, cell_size=16, max_cols=16)
-
+    renderer = GridGlyphRenderer()
     img = renderer("▁@#%,;'.-_漢")
     img.show()
 
