@@ -24,10 +24,24 @@ class GlyphRenderer:
         """
         if ch in self.cache_char2img:
             return self.cache_char2img[ch]
+        
         img = Image.new(self.img_mode, (self.cell_size, self.cell_size), 0)
         draw = ImageDraw.Draw(img)
-        draw.text((0, 0), ch, fill=255, font=self.font)
+
+        # Get glyph bounding box
+        bbox = self.font.getbbox(ch)  # (x0, y0, x1, y1)
+        char_w = bbox[2] - bbox[0]
+        char_h = bbox[3] - bbox[1]
+
+        # Align top-left of glyph with cell top-left
+        x = -bbox[0]   # shift left if bbox.x0 != 0
+        y = -bbox[1]   # shift up if bbox.y0 != 0
+
+        draw.text((x, y), ch, fill=255, font=self.font)
         self.cache_char2img[ch] = img
+
+        # draw.text((0, 0), ch, fill=255, font=self.font)
+        # self.cache_char2img[ch] = img
         return img
 
     def render_token(self, token):
@@ -64,7 +78,3 @@ if __name__ == "__main__":
     renderer = GlyphRenderer()
     img = renderer("▁,;'.-_漢")
     img.show()
-
-
-
-
