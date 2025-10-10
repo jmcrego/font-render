@@ -39,7 +39,7 @@ class GlyphRenderer:
 
         draw.text((0, 0), ch, fill=255, font=self.font)
         self.cache_char2img[ch] = img
-    
+
         return img
 
     def render_token(self, token):
@@ -75,5 +75,5 @@ class GlyphRenderer:
 if __name__ == "__main__":
 
     renderer = GlyphRenderer()
-    img = renderer("▁,;'.-_漢")
+    img = renderer("▁,;'.-_漢 yes")
     img.show()
