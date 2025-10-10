@@ -51,7 +51,7 @@ class GridGlyphRenderer:
 
     def __call__(self, t):
         """
-        render a list of strings (tokens) or a single string (token).
+        Render a list of strings (tokens) or a single string (token).
         """
         if type(t) is list:
             return [self.render_token(x) for x in t]
@@ -60,7 +60,7 @@ class GridGlyphRenderer:
 if __name__ == "__main__":
 
     renderer = GridGlyphRenderer()
-    img = renderer("▁@#%,;'.-_漢")
+    img = renderer("▁,;'.-_漢")
     img.show()
 
 
