@@ -36,7 +36,6 @@ class GlyphRenderer:
         # x = -bbox[0]   # shift left if bbox.x0 != 0
         # y = -bbox[1]   # shift up if bbox.y0 != 0
         # draw.text((x, y), ch, fill=255, font=self.font)
-        # self.cache_char2img[ch] = img
 
         draw.text((0, 0), ch, fill=255, font=self.font)
         self.cache_char2img[ch] = img
