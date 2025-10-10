@@ -19,7 +19,9 @@ class GridGlyphRenderer:
         self.char_cache = {}
 
     def render_char(self, ch):
-        """Render a single character into a cell_size x cell_size image with caching."""
+        """
+        Render a single character into a cell_size x cell_size image with caching.
+        """
         if ch in self.char_cache:
             return self.char_cache[ch]
 
@@ -47,15 +49,20 @@ class GridGlyphRenderer:
 
         return img
 
-    def __call__(self, tokens):
-        return [self.render_token(t) for t in tokens]
+    def __call__(self, t):
+        """
+        render a list of strings (tokens) or a single string (token).
+        """
+        if type(t) is list:
+            return [self.render_token(x) for x in t]
+        return self.render_token(t)
 
 if __name__ == "__main__":
 
     font_path = "fonts/unifont-16.0.04.ttf"
     renderer = GridGlyphRenderer(font_path, cell_size=16, max_cols=16)
 
-    img = renderer.render_token("▁@#%,;'.-_漢")
+    img = renderer("▁@#%,;'.-_漢")
     img.show()
 
 
