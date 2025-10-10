@@ -33,14 +33,18 @@ class GlyphRenderer:
     def render_token(self, token):
         """
         Render all characters of a token in a single row.
+        Always returns an image of size (cell_size, cell_size * max_cols).
         If the token is longer than max_cols, truncate it.
+        Shorter tokens are right-padded with blank space.
         """
         token = token[:self.max_cols]
         num_chars = len(token)
-        # Create single-row canvas
-        width = self.cell_size * num_chars
+
+        # Fixed canvas size (always same width)
+        width = self.cell_size * self.max_cols
         height = self.cell_size
         img = Image.new(self.img_mode, (width, height), 0)
+
         # Paste each character sequentially
         for i, ch in enumerate(token):
             char_img = self.render_char(ch)
