@@ -39,6 +39,7 @@ class GlyphRenderer:
 
         draw.text((0, 0), ch, fill=255, font=self.font)
         self.cache_char2img[ch] = img
+    
         return img
 
     def render_token(self, token):
@@ -60,6 +61,7 @@ class GlyphRenderer:
         for i, ch in enumerate(token):
             char_img = self.render_char(ch)
             img.paste(char_img, (i * self.cell_size, 0))
+
         return img
 
     def __call__(self, t):
