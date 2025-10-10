@@ -16,19 +16,18 @@ class GridGlyphRenderer:
         self.img_mode = img_mode
         # Load font
         self.font = ImageFont.truetype(font_path, cell_size)
-        self.char_cache = {}
+        self.cache_char2img = {}
 
     def render_char(self, ch):
         """
         Render a single character into a cell_size x cell_size image with caching.
         """
-        if ch in self.char_cache:
-            return self.char_cache[ch]
-
+        if ch in self.cache_char2img:
+            return self.cache_char2img[ch]
         img = Image.new(self.img_mode, (self.cell_size, self.cell_size), 0)
         draw = ImageDraw.Draw(img)
         draw.text((0, 0), ch, fill=255, font=self.font)
-        self.char_cache[ch] = img
+        self.cache_char2img[ch] = img
         return img
 
     def render_token(self, token):
@@ -46,7 +45,6 @@ class GridGlyphRenderer:
         for i, ch in enumerate(token):
             char_img = self.render_char(ch)
             img.paste(char_img, (i * self.cell_size, 0))
-
         return img
 
     def __call__(self, t):
