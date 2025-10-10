@@ -1,6 +1,6 @@
 from PIL import Image, ImageDraw, ImageFont
 
-class GridGlyphRenderer:
+class GlyphRenderer:
     def __init__(self, font_path="fonts/unifont-16.0.04.ttf", cell_size=16, max_cols=16, img_mode="L"):
         """
         Render tokens into a single-row sequence of characters.
@@ -57,7 +57,7 @@ class GridGlyphRenderer:
 
 if __name__ == "__main__":
 
-    renderer = GridGlyphRenderer()
+    renderer = GlyphRenderer()
     img = renderer("▁,;'.-_漢")
     img.show()
 
