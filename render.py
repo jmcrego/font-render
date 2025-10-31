@@ -113,6 +113,7 @@ class GlyphRendererVariable:
         return self.render_token(t)
 
 
+
 if __name__ == "__main__":
 
     # renderer = GlyphRenderer()
