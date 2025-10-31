@@ -116,9 +116,6 @@ class GlyphRendererVariable:
 if __name__ == "__main__":
 
     # renderer = GlyphRenderer()
-    # img = renderer("▁,;'.-_漢 yes")
-    # img.show()
-
-    renderer = GlyphRendererVariable(cell_size=16)
+    renderer = GlyphRendererVariable()
     for img in renderer(["▁,;'.-_漢", "yes"]):
         img.show()
