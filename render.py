@@ -120,12 +120,5 @@ if __name__ == "__main__":
     # img.show()
 
     renderer = GlyphRendererVariable(cell_size=16)
-    img = renderer(["▁,;'.-_漢", "yes"])
-    # Display images side by side for demonstration
-    from PIL import ImageOps
-    combined = Image.new("L", (sum(i.width for i in img), img[0].height))
-    x_offset = 0
-    for im in img:
-        combined.paste(im, (x_offset, 0))
-        x_offset += im.width
-    combined.show()
+    for img in renderer(["▁,;'.-_漢", "yes"]):
+        img.show()
