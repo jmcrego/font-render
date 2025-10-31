@@ -63,8 +63,69 @@ class GlyphRenderer:
             return [self.render_token(x) for x in t]
         return self.render_token(t)
 
+
+class GlyphRendererVariable:
+    def __init__(self, font_path="fonts/unifont-16.0.04.ttf", cell_size=16, img_mode="L"):
+        """
+        Render tokens into images of variable width (no padding).
+        Args:
+            font_path: Path to monospaced TTF font.
+            cell_size: Size of each character cell (square)
+            img_mode: 'L' for grayscale, '1' for binary, 'RGB' for color
+        """
+        self.font_path = font_path
+        self.cell_size = cell_size
+        self.img_mode = img_mode
+        self.font = ImageFont.truetype(font_path, cell_size)
+        self.cache_char2img = {}
+
+    def render_char(self, ch):
+        """Render a single character into a cell_size x cell_size image with caching."""
+        if ch in self.cache_char2img:
+            return self.cache_char2img[ch]
+        
+        img = Image.new(self.img_mode, (self.cell_size, self.cell_size), 0)
+        draw = ImageDraw.Draw(img)
+        draw.text((0, 0), ch, fill=255, font=self.font)
+        self.cache_char2img[ch] = img
+        return img
+
+    def render_token(self, token):
+        """Render a token into a single-row image with width = len(token) * cell_size."""
+        num_chars = len(token)
+        width = num_chars * self.cell_size
+        height = self.cell_size
+        img = Image.new(self.img_mode, (width, height), 0)
+
+        for i, ch in enumerate(token):
+            char_img = self.render_char(ch)
+            img.paste(char_img, (i * self.cell_size, 0))
+
+        return img
+
+    def __call__(self, t):
+        """
+        Render a list of strings (tokens) or a single string (token).
+        Returns a single PIL image or a list of images.
+        """
+        if isinstance(t, list):
+            return [self.render_token(x) for x in t]
+        return self.render_token(t)
+
+
 if __name__ == "__main__":
 
-    renderer = GlyphRenderer()
-    img = renderer("▁,;'.-_漢 yes")
-    img.show()
+    # renderer = GlyphRenderer()
+    # img = renderer("▁,;'.-_漢 yes")
+    # img.show()
+
+    renderer = GlyphRendererVariable(cell_size=16)
+    img = renderer(["▁,;'.-_漢", "yes"])
+    # Display images side by side for demonstration
+    from PIL import ImageOps
+    combined = Image.new("L", (sum(i.width for i in img), img[0].height))
+    x_offset = 0
+    for im in img:
+        combined.paste(im, (x_offset, 0))
+        x_offset += im.width
+    combined.show()
